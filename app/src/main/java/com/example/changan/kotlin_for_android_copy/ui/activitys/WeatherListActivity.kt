@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import com.example.changan.kotlin_for_android_copy.R
 import com.example.changan.kotlin_for_android_copy.Request
 import com.example.changan.kotlin_for_android_copy.domain.commands.RequestForecastCommand
+import com.example.changan.kotlin_for_android_copy.domain.models.ForecastTr
 import com.example.changan.kotlin_for_android_copy.ui.activitys.adapter.WeatherListAdatper
 import kotlinx.android.synthetic.main.activity_weather_list.*
 import kotlinx.coroutines.experimental.android.UI
@@ -52,7 +53,9 @@ class WeatherListActivity : AppCompatActivity() {
             var result = RequestForecastCommand("94043").execute()
             uiThread {
                 longToast("已经执行请求")
-                var weatherListAdatper = WeatherListAdatper(result)
+                var weatherListAdatper = WeatherListAdatper(result) {
+                    forecastTr -> toast(forecastTr.date)
+                }
                 recyclerView.adapter = weatherListAdatper
             }
         }
